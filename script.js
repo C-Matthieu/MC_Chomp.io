@@ -138,9 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
-});
-
-// Fonction pour ouvrir et fermer la modal des règles
+    // Fonction pour ouvrir et fermer la modal des règles
 function openRulesModal() {
     document.getElementById('rules-modal').style.display = 'flex';
 }
@@ -148,3 +146,6 @@ function openRulesModal() {
 function closeRulesModal() {
     document.getElementById('rules-modal').style.display = 'none';
 }
+
+});
+
