@@ -9,6 +9,22 @@
 	</head>	
 <body  style="text-align: center;">
 	<h1>Jeu de Chomp</h1>
+	<div id="rules-button">
+		<button onclick="openRulesModal()">?</button>
+	</div>
+	
+	<!-- Fenêtre modale -->
+	<div id="rules-modal" class="modal">
+		<div class="modal-content">
+			<span class="close" onclick="closeRulesModal()">&times;</span>
+			<h2>Règles du jeu</h2>
+			<p>Le jeu de Chomp est un jeu à deux joueurs. Chaque joueur, à tour de rôle, clique sur une case. 
+				Toutes les cases situées dans le rectangle d'angle inférieur gauche de la case cliquée sont mangées.
+				Ce qui correspond à toutes les cases situées à droite et en dessous de la case cliquée.
+				Le joueur qui mange le carré rouge (poison) perd la partie.</p>
+		</div>
+	</div>
+	
 	<h2 id="joueur"></h2>
 	<h2 id="gagnant"></h2>
     <div id="game-board"></div>

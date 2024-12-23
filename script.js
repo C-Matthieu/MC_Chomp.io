@@ -5,24 +5,32 @@ document.addEventListener('DOMContentLoaded', () => {
     let poison = rows - 1;
     document.getElementById('rows').focus();
     let termine = false;
+    const ultra_violet = "#6c6ea0ff";
 
     // Fonction pour générer le plateau de jeu
     function generateGameBoard() {
         const gameBoard = document.getElementById('game-board');
+        const gagnant = document.getElementById('gagnant');
+        const joueur = document.getElementById('joueur');
         rows = document.getElementById('rows').value;
-        document.getElementById('rows').value = '';
         cols = document.getElementById('cols').value;
+
+        // Réinitialisation des variables
+        termine = false;
+        document.getElementById('rows').value = '';
         document.getElementById('cols').value = '';
         poison = rows - 1;
-
-        // Efface les anciens boutons (si nécessaire)
         gameBoard.innerHTML = '';
+        gagnant.innerHTML = '';
+        joueur.innerHTML = '';
+        gagnant.style.color = ultra_violet;
+        joueur.style.color = ultra_violet;
+        l_button = [];
 
         // Ajuste le style de la grille en fonction des dimensions
         gameBoard.style.gridTemplateColumns = `repeat(${cols}, 50px)`;
 
         // Génère les boutons
-        l_button = []; // Réinitialise le tableau
         for (let i = 0; i < rows; i++) {
             let ligne = [];
             for (let j = 0; j < cols; j++) {
@@ -55,20 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         gagnant.innerHTML = '';
-        if (i == poison && j == 0) {
-            gagnant.style.color = 'green';
-            joueur.style.color = 'red';
-            termine = true;
-            if (joueur.innerHTML == "Au tour de Joueur 1") {
-                gagnant.innerHTML = 'Joueur 2 a gagné';
-                joueur.innerHTML = 'Joueur 1 a perdu';
-            } else {
-                gagnant.innerHTML = 'Joueur 1 a gagné';
-                joueur.innerHTML = 'Joueur 2 a perdu';
-            }
-        } else if (l_button[i][j][1] == '#5c5c5c') {
+        if (l_button[i][j][1] == '#5c5c5c') {
             gagnant.innerHTML = 'Case déjà visitée, veuillez choisir une autre case';
-        } else {
+        } 
+        else {
             for (let k = 0; k < rows; k++) {
                 for (let l = 0; l < cols; l++) {
                     if (k <= i && l >= j) {
@@ -77,10 +75,24 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 }
             }
+        
             if (joueur.innerHTML == "Au tour de Joueur 1") {
                 joueur.innerHTML = "Au tour de Joueur 2";
             } else {
                 joueur.innerHTML = "Au tour de Joueur 1";
+            }
+        }
+        if (i == poison && j == 0) {
+            gagnant.style.color = 'green';
+            joueur.style.color = 'red';
+            termine = true;
+            document.getElementById('rows').focus();
+            if (joueur.innerHTML == "Au tour de Joueur 1") {
+                gagnant.innerHTML = 'Joueur 2 a gagné';
+                joueur.innerHTML = 'Joueur 1 a perdu';
+            } else {
+                gagnant.innerHTML = 'Joueur 1 a gagné';
+                joueur.innerHTML = 'Joueur 2 a perdu';
             }
         }
     }
@@ -127,3 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+// Fonction pour ouvrir et fermer la modal des règles
+function openRulesModal() {
+    document.getElementById('rules-modal').style.display = 'flex';
+}
+
+function closeRulesModal() {
+    document.getElementById('rules-modal').style.display = 'none';
+}
