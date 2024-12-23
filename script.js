@@ -76,11 +76,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
         
-            if (joueur.innerHTML == "Au tour de Joueur 1") {
-                joueur.innerHTML = "Au tour de Joueur 2";
-            } else {
-                joueur.innerHTML = "Au tour de Joueur 1";
-            }
         }
         if (i == poison && j == 0) {
             gagnant.style.color = 'green';
@@ -94,6 +89,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 gagnant.innerHTML = 'Joueur 1 a gagné';
                 joueur.innerHTML = 'Joueur 2 a perdu';
             }
+        }
+        else if (joueur.innerHTML == "Au tour de Joueur 1") {
+            joueur.innerHTML = "Au tour de Joueur 2";
+        } else {
+            joueur.innerHTML = "Au tour de Joueur 1";
         }
     }
 
