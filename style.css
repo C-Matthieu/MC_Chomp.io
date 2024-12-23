@@ -80,8 +80,8 @@ button {
 }
 
 #rules-button button:hover {
-    width: 45px;
-	height: 45px;
+    width: 35px;
+	height: 35px;
 }
 
 /* Style de la fenêtre modale */
