@@ -1,3 +1,4 @@
+let generateGameBoard;
 document.addEventListener('DOMContentLoaded', () => {
     let l_button = [];
     let rows = 0;
@@ -8,12 +9,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const ultra_violet = "#6c6ea0ff";
 
     // Fonction pour générer le plateau de jeu
-    function generateGameBoard() {
+    generateGameBoard = function generateGameBoard() {
         const gameBoard = document.getElementById('game-board');
         const gagnant = document.getElementById('gagnant');
         const joueur = document.getElementById('joueur');
+        gagnant.innerHTML = '';
         rows = document.getElementById('rows').value;
         cols = document.getElementById('cols').value;
+        if (rows <= 0 || cols <= 0) {
+            gagnant.innerHTML = 'Veuillez entrer des valeurs valides';
+            document.getElementById('rows').value = '';
+            document.getElementById('cols').value = '';
+            return;
+        }
 
         // Réinitialisation des variables
         termine = false;
