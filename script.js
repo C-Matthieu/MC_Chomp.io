@@ -1,4 +1,5 @@
 let generateGameBoard;
+let retour;
 document.addEventListener('DOMContentLoaded', () => {
     let l_button = [];
     let rows = 0;
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const gameBoard = document.getElementById('game-board');
         const gagnant = document.getElementById('gagnant');
         const joueur = document.getElementById('joueur');
+        const retour = document.getElementById('retour');
         gagnant.innerHTML = '';
         rows = document.getElementById('rows').value;
         cols = document.getElementById('cols').value;
@@ -44,11 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
             for (let j = 0; j < cols; j++) {
                 const button = document.createElement('button');
                 button.textContent = ``;
-                ligne.push([button, "green"]);
+                ligne.push([button, ["green"]]);
 
                 // Ajoute des événements de clic
                 button.addEventListener('click', () => {
-                    console.log(`Button (${i}, ${j}) clicked!`);
+                    console.log(`Boutton (${i}, ${j}) cliqué!`);
                     changeValue(i, j);
                 });
                 button.addEventListener('mouseover', () => highlightSquare(i, j));
@@ -59,8 +61,9 @@ document.addEventListener('DOMContentLoaded', () => {
             l_button.push(ligne);
         }
         l_button[rows - 1][0][0].style.backgroundColor = 'red';
-        l_button[rows - 1][0][1]= 'red';
+        l_button[rows - 1][0][1][0]= 'red';
         document.getElementById('joueur').innerHTML = 'Au tour de Joueur 1';
+        retour.style.display = "block";
     }
 
     // Fonction pour changer la couleur des cases lorsqu'un joueur clique dessus
@@ -79,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 for (let l = 0; l < cols; l++) {
                     if (k <= i && l >= j) {
                         l_button[k][l][0].style.backgroundColor = '#5c5c5c';
-                        l_button[k][l][1] = '#5c5c5c';
+                        l_button[k][l][1].push('#5c5c5c');
                     }
                 }
             }
@@ -109,7 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function highlightSquare(i,j){
         for (let k = 0; k < rows; k++) {
             for (let l = 0; l < cols; l++) {
-                if (k <= i && l >= j && l_button[k][l][1] != '#5c5c5c') {
+                n = l_button[k][l][1].length;
+                if (k <= i && l >= j && l_button[k][l][1][n-1] != '#5c5c5c') {
                     l_button[k][l][0].style.backgroundColor = 'grey';
                 }
             }
@@ -119,13 +123,41 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetHighlight(i,j){
         for (let k = 0; k < rows; k++) {
             for (let l = 0; l < cols; l++) {
-                if (l_button[k][l][1] != l_button[k][l][0].style.backgroundColor) {
-                    l_button[k][l][0].style.backgroundColor = l_button[k][l][1];
+                n = l_button[k][l][1].length;
+                if (l_button[k][l][1][n-1] != l_button[k][l][0].style.backgroundColor) {
+                    l_button[k][l][0].style.backgroundColor = l_button[k][l][1][n-1];
                 }
             }
         }
     }
 
+    // Fonction pour annuler le dernier coup
+    retour = function retour() {
+        const joueur = document.getElementById('joueur');
+        const gagnant = document.getElementById('gagnant');
+        gagnant.style.color = ultra_violet;
+        joueur.style.color = ultra_violet;
+        gagnant.innerHTML = '';
+        termine = false;
+        let changment = false;
+        for (let k = 0; k < rows; k++) {
+            for (let l = 0; l < cols; l++) {
+                n = l_button[k][l][1].length;
+                if (n > 1) {
+                    changment = true;
+                    l_button[k][l][0].style.backgroundColor = l_button[k][l][1][n-2];
+                    l_button[k][l][1].pop();
+                }
+            }
+        }
+        if (changment) {
+            if (joueur.innerHTML == "Au tour de Joueur 1") {
+                joueur.innerHTML = "Au tour de Joueur 2";
+            } else {
+                joueur.innerHTML = "Au tour de Joueur 1";
+            }
+        }
+    };
 
     // Fonction qui permet de gérer les focus grâce aux touches du clavier
     document.addEventListener('keydown', function (event) {
